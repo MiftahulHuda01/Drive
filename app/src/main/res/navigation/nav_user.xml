@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_user"
+    app:startDestination="@id/userHomeFragment">
+
+    <fragment
+        android:id="@+id/userHomeFragment"
+        android:name="com.huda.drive.ui.user.UserHomeFragment"
+        android:label="fragment_user_home"
+        tools:layout="@layout/fragment_user_home">
+        <action
+            android:id="@+id/action_userHomeFragment_to_userOrderFragment"
+            app:destination="@id/userOrderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/userOrderFragment"
+        android:name="com.huda.drive.ui.user.UserOrderFragment"
+        android:label="fragment_user_order"
+        tools:layout="@layout/fragment_user_order">
+        <argument
+            android:name="kendaraan"
+            app:argType="com.huda.drive.model.Kendaraan" />
+        <action
+            android:id="@+id/action_userOrderFragment_to_userOrdersFragment"
+            app:destination="@id/userOrdersFragment"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/nav_user"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/userProfileFragment"
+        android:name="com.huda.drive.ui.user.UserProfileFragment"
+        android:label="fragment_user_profile"
+        tools:layout="@layout/fragment_user_profile" />
+    <fragment
+        android:id="@+id/userOrdersFragment"
+        android:name="com.huda.drive.ui.user.UserOrdersFragment"
+        android:label="fragment_user_orders"
+        tools:layout="@layout/fragment_user_orders">
+        <action
+            android:id="@+id/action_userOrdersFragment_to_detailOrderFragment"
+            app:destination="@id/detailOrderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailOrderFragment"
+        android:name="com.huda.drive.ui.user.UserDetailOrderFragment"
+        android:label="fragment_detail_order"
+        tools:layout="@layout/fragment_user_detail_order">
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
+</navigation>

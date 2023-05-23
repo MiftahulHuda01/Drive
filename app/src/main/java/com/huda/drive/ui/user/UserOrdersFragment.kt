@@ -1,0 +1,120 @@
+package com.huda.drive.ui.user
+
+import android.graphics.Color
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
+import com.firebase.ui.database.FirebaseRecyclerAdapter
+import com.firebase.ui.database.FirebaseRecyclerOptions
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.Query
+import com.huda.drive.R
+import com.huda.drive.adapter.FirebaseViewHolder
+import com.huda.drive.adapter.OrdersAdapter
+import com.huda.drive.databinding.FragmentUserOrdersBinding
+import com.huda.drive.model.Order
+import com.huda.drive.model.Orders
+import com.huda.drive.util.PreferenceManager
+import com.huda.drive.util.Utils
+import kotlin.math.log
+
+class UserOrdersFragment : Fragment(), OrdersAdapter.OnItemClickListener {
+
+    private lateinit var binding: FragmentUserOrdersBinding
+
+    private lateinit var options: FirebaseRecyclerOptions<Orders>
+    private lateinit var adapter: FirebaseRecyclerAdapter<Orders, FirebaseViewHolder>
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+
+        binding = FragmentUserOrdersBinding.inflate(inflater, container, false)
+        val root = binding.root
+
+        val user = PreferenceManager.getUser(requireContext())!!
+
+        val query: Query =
+            FirebaseDatabase.getInstance().reference.child("orders")
+                .orderByChild("uid")
+                .equalTo(user.uid)
+
+        options = FirebaseRecyclerOptions.Builder<Orders>()
+            .setQuery(
+                query,
+                Orders::class.java
+            )
+            .build()
+
+        adapter = object : FirebaseRecyclerAdapter<Orders, FirebaseViewHolder>(options) {
+            override fun onDataChanged() {
+                super.onDataChanged()
+                val count = adapter.itemCount
+                if (count == 0) {
+                    Utils.toast(requireContext(), "Pesanan kosong")
+                }
+            }
+
+            override fun onBindViewHolder(
+                holder: FirebaseViewHolder,
+                i: Int,
+                order: Orders
+            ) {
+                Glide.with(requireContext())
+                    .load(Utils.decodeStringtoInt(requireContext(),order.item.img))
+                    .into(holder.imgItem!!)
+                holder.tvItem!!.text = order.item.name
+                holder.tvTimestamp!!.text = Utils.formatDateSimple(order.timestamp!!)
+                holder.tvPrice!!.text = Utils.formatPrice(order.price!!)
+                holder.tvStatus!!.text = Utils.formatStatus(order.status!!)
+                when (order.status) {
+                    0 -> holder.tvStatus!!.setTextColor(Color.parseColor("#FFC730"))
+                    1 -> holder.tvStatus!!.setTextColor(Color.parseColor("#15BE6D"))
+                    2 -> holder.tvStatus!!.setTextColor(Color.parseColor("#2196F3"))
+                }
+
+                holder.itemView.setOnClickListener {
+                    val data =
+                        UserOrdersFragmentDirections.actionUserOrdersFragmentToDetailOrderFragment(
+                            order.id
+                        )
+                    findNavController().navigate(data)
+                }
+            }
+
+            override fun onCreateViewHolder(
+                parent: ViewGroup,
+                viewType: Int
+            ): FirebaseViewHolder {
+                return FirebaseViewHolder(
+                    LayoutInflater.from(context)
+                        .inflate(R.layout.list_orders, parent, false)
+                )
+            }
+        }
+        binding.rvOrders.adapter = adapter
+
+        return root
+    }
+
+    override fun onItemClick(orders: Order) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        adapter.notifyDataSetChanged()
+        adapter.startListening()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        adapter.stopListening()
+    }
+}

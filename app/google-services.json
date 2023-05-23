@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "855966102283",
+    "firebase_url": "https://drive-ea73d-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "drive-ea73d",
+    "storage_bucket": "drive-ea73d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855966102283:android:851e748544eade8662e80e",
+        "android_client_info": {
+          "package_name": "com.huda.drive"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855966102283-q5dkpcsd0hfolpo9st4sh4v8ev0dgf8o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAj77YiTRRL-81vgWyQ0xHkJ4_WqBSL-4k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855966102283-q5dkpcsd0hfolpo9st4sh4v8ev0dgf8o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

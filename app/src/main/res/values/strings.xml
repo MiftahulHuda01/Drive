@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Drive</string>
+    <string name="tagline">Rental Motor Makassar</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="username">Nama</string>
+    <string name="phone">Telephone</string>
+    <string name="home">Home</string>
+    <string name="order">Pesan</string>
+    <string name="orders">Pesanan</string>
+    <string name="profile">Profil</string>
+    <string name="feature">Fasilitas</string>
+    <string name="desc_login">Silahkan login menggunakan akun yang telah terdaftar di aplikasi Drive</string>
+    <string name="desc_register">Silahkan login menggunakan akun yang telah terdaftar di aplikasi Drive</string>
+    <string name="logout">Keluar</string>
+    <string name="transport">Kendaraan</string>
+</resources>
